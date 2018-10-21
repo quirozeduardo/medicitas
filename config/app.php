@@ -168,6 +168,8 @@ return [
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
         \InfyOm\Generator\InfyOmGeneratorServiceProvider::class,
         \InfyOm\AdminLTETemplates\AdminLTETemplatesServiceProvider::class,
+
+        Spatie\Permission\PermissionServiceProvider::class,
         /*
          * Application Service Providers...
          */
