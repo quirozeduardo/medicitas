@@ -1,12 +1,12 @@
 <?php
 
-namespace App\DataTables\Admin;
+namespace App\DataTables\Administration;
 
-use App\Models\Admin\User;
+use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
-class UserDataTable extends DataTable
+class RoleDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -17,8 +17,14 @@ class UserDataTable extends DataTable
     public function dataTable($query)
     {
         $dataTable = new EloquentDataTable($query);
+        $dataTable->rawColumns(['permissions','action']);
+        $dataTable->editColumn('permissions',function($data){
 
-        return $dataTable->addColumn('action', 'admin.users.datatables_actions');
+            return view('administration.roles.datatables_permissions')
+                ->with('permissions',$data->permissions);
+        });
+
+        return $dataTable->addColumn('action', 'administration.roles.datatables_actions');
     }
 
     /**
@@ -27,7 +33,7 @@ class UserDataTable extends DataTable
      * @param \App\Models\Post $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(User $model)
+    public function query(Role $model)
     {
         return $model->newQuery();
     }
@@ -64,14 +70,16 @@ class UserDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'name',
-            'last_name',
-            'birthdate',
-            'gender',
-            'email',
-            'email_verified_at',
-            'password',
-            'remember_token'
+            [
+                'data' => 'name',
+                'title' => __('roles.title_column_name'),
+            ],
+            [
+                'data' => 'permissions',
+                'title' => __('roles.title_column_permissions'),
+                'searchable' => false,
+                'orderable' => false
+            ]
         ];
     }
 
@@ -82,6 +90,6 @@ class UserDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'usersdatatable_' . time();
+        return 'rolesdatatable_' . time();
     }
 }
