@@ -5,5 +5,9 @@
     "save": "Guardar",
     "id": "Id:",
     "created_at": "Creado en:",
-    "updated_at": "Actualizado en:"
+    "updated_at": "Actualizado en:",
+    "member_since": "Miembro desde",
+    "sign_out": "Salir",
+    "profile": "Perfil",
+    "guest": "Invitado"
 }

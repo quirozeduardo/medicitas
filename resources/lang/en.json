@@ -5,5 +5,9 @@
     "save": "Save",
     "id": "Id:",
     "created_at": "Created At:",
-    "updated_at": "Updated At:"
+    "updated_at": "Updated At:",
+    "member_since": "Member since",
+    "sign_out": "Sign out",
+    "profile": "Profile",
+    "guest": "Guest"
 }
