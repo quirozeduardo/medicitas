@@ -1,5 +1,5 @@
 <div>
     @foreach($roles as $role)
-        {!! Form::label($role->id, $role->name) !!}
+        <a class="btn btn-info btn-xs" href="{!! route('administration.roles.show',$role->id) !!}">{{ $role->name  }}</a>
     @endforeach
 </div>

@@ -52,6 +52,21 @@
     <p>{!! $user->remember_token !!}</p>
 </div>
 
+<!-- Roles Field -->
+<div class="form-group">
+    {!! Form::label('roles', 'Roles:') !!}
+    @foreach($user->roles as $role)
+        <a class="btn btn-info btn-xs" href="{!! route('administration.roles.show',$role->id) !!}">{{ $role->name  }}</a>
+    @endforeach
+</div>
+<!-- Permissions Field -->
+<div class="form-group">
+    {!! Form::label('permissions', 'Permissions:') !!}
+    @foreach($user->permissions as $permission)
+        <a class="btn btn-success btn-xs" href="{!! route('administration.permissions.show',$permission->id) !!}">{{ $permission->name  }}</a>
+    @endforeach
+</div>
+
 <!-- Created At Field -->
 <div class="form-group">
     {!! Form::label('created_at', __('created_at')) !!}

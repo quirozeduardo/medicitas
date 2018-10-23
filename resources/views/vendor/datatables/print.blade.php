@@ -5,9 +5,12 @@
         <meta charset="UTF-8">
         <meta name=description content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Bootstrap CSS -->
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <!-- Bootstrap 3.3.7 -->
+        <link rel="stylesheet" href="{{ asset('plugins/bootstrap3/css/bootstrap.min.css') }}">
+
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="{{ asset('plugins/fontawesome/css/all.min.css') }}">
         <style>
             body {margin: 20px}
         </style>
@@ -15,7 +18,7 @@
     <body>
         <table class="table table-bordered table-condensed table-striped">
             @foreach($data as $row)
-                @if ($row == reset($data)) 
+                @if ($row == reset($data))
                     <tr>
                         @foreach($row as $key => $value)
                             <th>{!! $key !!}</th>

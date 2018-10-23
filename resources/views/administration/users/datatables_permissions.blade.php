@@ -1,5 +1,5 @@
 <div>
     @foreach($permissions as $permission)
-        {!! Form::label($permission->id, $permission->name) !!}
+        <a class="btn btn-success btn-xs" href="{!! route('administration.permissions.show',$permission->id) !!}">{{ $permission->name  }}</a>
     @endforeach
 </div>
