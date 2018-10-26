@@ -23,3 +23,10 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'administration', 'as' => 'a
     Route::resource('roles', 'Administration\RoleController');
     Route::resource('permissions', 'Administration\PermissionController');
 });
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'medical', 'as' => 'medical.'], function () {
+    Route::resource('doctors', 'Medical\DoctorController');
+    Route::resource('medicalAppointmentStates', 'Medical\MedicalAppointmentStateController');
+    Route::resource('medicalConsultants', 'Medical\MedicalConsultantController');
+    Route::resource('medicalSpecialties', 'Medical\MedicalSpecialityController');
+});

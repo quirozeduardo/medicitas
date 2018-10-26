@@ -1,21 +1,12 @@
 <?php
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Users Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used by the paginator library to build
-    | the simple pagination links. You are free to change them to anything
-    | you want to customize your views to better match your application.
-    |
-    */
+    'field_id' => 'Id:',
     'field_name' => 'Name:',
     'field_last_name' => 'Last Name:',
     'field_birthdate' => 'Birthdate:',
     'field_gender' => 'Gender:',
     'field_email' => 'Email:',
+    'field_email_verified_at' => 'Email Verified At:',
     'field_password' => 'Password:',
     'field_confirm_password' => 'Confirm Password:',
     'field_roles' => 'Roles:',

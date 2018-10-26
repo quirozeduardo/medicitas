@@ -17,7 +17,13 @@ class UserDataTable extends DataTable
     public function dataTable($query)
     {
         $dataTable = new EloquentDataTable($query);
-        $dataTable->rawColumns(['roles','permissions','action']);
+        $dataTable->rawColumns(['gender','roles','permissions','action']);
+        $dataTable->editColumn('gender',function($data){
+            if($data->gender)
+                return __('male');
+            else
+                return __('female');
+        });
         $dataTable->editColumn('roles',function($data){
 
             return view('administration.users.datatables_roles')

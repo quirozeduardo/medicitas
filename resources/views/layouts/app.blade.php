@@ -123,11 +123,17 @@
 
     <script src="{{ asset('plugins/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
-<script !src="">
-    $(document).ready(function () {
-        $('.select2').select2();
-    });
-</script>
+    <script !src="">
+        $(document).ready(function () {
+            $('.select2').select2({
+                placeholder: "{{ __('select') }}"
+            });
+            $('.select2-nullable').select2({
+                placeholder: "{{ __('select') }}",
+                allowClear: true,
+            });
+        });
+    </script>
     @yield('scripts')
 </body>
 </html>

@@ -1,18 +1,18 @@
 <!-- Id Field -->
 <div class="form-group">
-    {!! Form::label('id', 'Id:') !!}
+    {!! Form::label('id', __('permissions.field_id')) !!}
     <p>{!! $permission->id !!}</p>
 </div>
 
 <!-- Name Field -->
 <div class="form-group">
-    {!! Form::label('name', 'Name:') !!}
+    {!! Form::label('name', __('permissions.field_name')) !!}
     <p>{!! $permission->name !!}</p>
 </div>
 
 <!-- Guard Name Field -->
 <div class="form-group">
-    {!! Form::label('guard_name', 'Guard Name:') !!}
+    {!! Form::label('guard_name', __('permissions.field_guard_name')) !!}
     <p>{!! $permission->guard_name !!}</p>
 </div>
 

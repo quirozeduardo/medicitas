@@ -9,5 +9,11 @@
     "member_since": "Miembro desde",
     "sign_out": "Salir",
     "profile": "Perfil",
-    "guest": "Invitado"
+    "guest": "Invitado",
+    "user_control": "Control de Usuarios",
+    "select": "Seleccionar",
+    "medical": "Medico",
+
+    "male": "Masculino",
+    "female": "Femenino"
 }
