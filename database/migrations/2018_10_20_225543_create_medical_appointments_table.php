@@ -20,6 +20,7 @@ class CreateMedicalAppointmentsTable extends Migration
             $table->integer('doctor_id')->unsigned();
             $table->integer('medical_consultant_id')->unsigned()->nullable(true);
             $table->integer('medical_appointment_status_id')->unsigned();
+            $table->string('comments',512)->nullable(true);
             $table->timestamps();
 
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
