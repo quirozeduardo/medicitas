@@ -2,11 +2,11 @@
 
 namespace App\DataTables\Medical;
 
-use App\Models\Medical\Doctor;
+use App\Models\Medical\Patient;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
-class DoctorDataTable extends DataTable
+class PatientDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -22,19 +22,7 @@ class DoctorDataTable extends DataTable
 
             return '<a href="'.route('administration.users.show',$data->user->id).'">'.$data->user->name.'</a>';
         });
-        $dataTable->editColumn('medical_speciality_id',function($data){
-
-            return $data->medicalSpeciality->name;
-        });
-        $dataTable->editColumn('medical_consultant_id',function($data){
-            $medicalConsultant = $data->medicalConsultant;
-            if($medicalConsultant)
-                return $medicalConsultant->name;
-            else
-                return '';
-        });
-
-        return $dataTable->addColumn('action', 'medical.doctors.datatables_actions');
+        return $dataTable->addColumn('action', 'medical.patients.datatables_actions');
     }
 
     /**
@@ -43,7 +31,7 @@ class DoctorDataTable extends DataTable
      * @param \App\Models\Post $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Doctor $model)
+    public function query(Patient $model)
     {
         return $model->newQuery();
     }
@@ -82,15 +70,11 @@ class DoctorDataTable extends DataTable
         return [
             [
                 'data' => 'user_id',
-                'title' => __('doctors.title_column_user'),
+                'title' => __('patients.title_column_user'),
             ],
             [
-                'data' => 'medical_speciality_id',
-                'title' => __('doctors.title_column_medical_speciality'),
-            ],
-            [
-                'data' => 'medical_consultant_id',
-                'title' => __('doctors.title_column_medical_consultant'),
+                'data' => 'observations',
+                'title' => __('patients.title_column_observations'),
             ],
         ];
     }
@@ -102,6 +86,6 @@ class DoctorDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'doctorsdatatable_' . time();
+        return 'patientsdatatable_' . time();
     }
 }

@@ -1,12 +1,15 @@
 <li class="treeview active">
     <a href="#"><i class="fa fa-user-md"></i> <span>{{ __('medical') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
+        <li class="{{ Request::is('patients*') ? 'active' : '' }}">
+            <a href="{!! route('medical.patients.index') !!}"><i class="fa fa-user"></i><span>Patients</span></a>
+        </li>
         <li class="{{ Request::is('doctors*') ? 'active' : '' }}">
             <a href="{!! route('medical.doctors.index') !!}"><i class="fa fa-user-md"></i><span>{{ __('doctors.title_doctors') }}</span></a>
         </li>
 
         <li class="{{ Request::is('medicalAppointmentStates*') ? 'active' : '' }}">
-            <a href="{!! route('medical.medicalAppointmentStates.index') !!}"><i class="fa fa-edit"></i><span>{{ __('medical_appointment_states.title_medical_appointment_states') }}</span></a>
+            <a href="{!! route('medical.medicalAppointmentStates.index') !!}"><i class="fa fa-check-double"></i><span>{{ __('medical_appointment_states.title_medical_appointment_states') }}</span></a>
         </li>
 
         <li class="{{ Request::is('medicalConsultants*') ? 'active' : '' }}">
@@ -14,7 +17,7 @@
         </li>
 
         <li class="{{ Request::is('medicalSpecialties*') ? 'active' : '' }}">
-            <a href="{!! route('medical.medicalSpecialties.index') !!}"><i class="fa fa-edit"></i><span>{{ __('medical_specialties.title_medical_specialties') }}</span></a>
+            <a href="{!! route('medical.medicalSpecialties.index') !!}"><i class="fa fa-stethoscope"></i><span>{{ __('medical_specialties.title_medical_specialties') }}</span></a>
         </li>
 
     </ul>
@@ -33,3 +36,5 @@
         </li>
     </ul>
 </li>
+
+

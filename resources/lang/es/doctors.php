@@ -5,7 +5,7 @@ return [
     'field_medical_speciality' => 'Especialidad Medica:',
     'field_medical_consultant' => 'Consultorio Medico:',
 
-    'title_column_user' => 'Nombre',
+    'title_column_user' => 'Usuario',
     'title_column_medical_speciality' => 'Especialidad Medica',
     'title_column_medical_consultant' => 'Consultorio Medico',
 
