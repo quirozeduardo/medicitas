@@ -13,7 +13,7 @@
     "user_control": "User Control",
     "select": "Select",
     "medical": "Medical",
-
     "male": "Male",
-    "female": "Female"
+    "female": "Female",
+    "doctors": "Doctors"
 }

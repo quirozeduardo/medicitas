@@ -1,3 +1,5 @@
+@include('components.macros_icheck')
+
 <!-- Name Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('name', __('users.field_name')) !!}
@@ -13,7 +15,7 @@
 <!-- Birthdate Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('birthdate', __('users.field_birthdate')) !!}
-    {!! Form::date('birthdate', null, ['class' => 'form-control']) !!}
+    {!! Form::text('birthdate', null, ['class' => 'form-control date']) !!}
 </div>
 
 
@@ -39,10 +41,10 @@
 <!-- Gender Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('gender', __('users.field_gender')) !!}
-    <label class="checkbox-inline">
-        {!! Form::hidden('gender', false) !!}
-        {!! Form::checkbox('gender', '1', null) !!} 1
-    </label>
+    <div class="">
+        {!! Form::iRadio('gender',__('male'),1) !!}
+        {!! Form::iRadio('gender',__('female'),0) !!}
+    </div>
 </div>
 
 <!-- Roles Field -->

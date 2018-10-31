@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Administration;
 use App\DataTables\Administration\UserDataTable;
 use App\Http\Requests\Administration\CreateUserRequest;
 use App\Http\Requests\Administration\UpdateUserRequest;
+use App\Models\UserDetails;
 use App\Repositories\Administration\UserRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;

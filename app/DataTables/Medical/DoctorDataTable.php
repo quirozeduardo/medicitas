@@ -17,14 +17,15 @@ class DoctorDataTable extends DataTable
     public function dataTable($query)
     {
         $dataTable = new EloquentDataTable($query);
-        $dataTable->rawColumns(['user_id','action']);
+        $dataTable->rawColumns(['user_id','medical_speciality_id','action']);
         $dataTable->editColumn('user_id',function($data){
 
             return '<a href="'.route('administration.users.show',$data->user->id).'">'.$data->user->name.'</a>';
         });
         $dataTable->editColumn('medical_speciality_id',function($data){
 
-            return $data->medicalSpeciality->name;
+            return '<a href="'.route('medical.medicalSpecialties.show',$data->medicalSpeciality->id).'">'.$data->medicalSpeciality->name.'</a>';
+
         });
         $dataTable->editColumn('medical_consultant_id',function($data){
             $medicalConsultant = $data->medicalConsultant;

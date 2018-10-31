@@ -6,14 +6,14 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="http://infyom.com/images/logo/blue_logo_150x150.jpg" class="img-circle"
+                <img src="{{ $avatarUrl }}" class="img-circle"
                      alt="User Image"/>
             </div>
             <div class="pull-left info">
                 @if (Auth::guest())
                 <p>{{ __('guest') }}</p>
                 @else
-                    <p>{{ Auth::user()->name}}</p>
+                    <p><a href="{{ route('profile.index') }}"><p class="info">{{ Auth::user()->name}}</p></a></p>
                 @endif
                 <!-- Status -->
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
