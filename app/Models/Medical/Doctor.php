@@ -86,4 +86,9 @@ class Doctor extends Model
     {
         return $this->hasMany(\App\Models\Medical\MedicalAppointment::class);
     }
+
+    public function patients()
+    {
+        return $this->belongsToMany(\App\Models\Medical\Patient::class, 'doctor_patient');
+    }
 }

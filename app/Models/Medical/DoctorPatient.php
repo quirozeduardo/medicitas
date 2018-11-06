@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DoctorPatient extends Model
 {
+    protected $table = 'doctor_patient';
     public function patients()
     {
         return $this->hasMany(\App\Models\Medical\Patient::class);

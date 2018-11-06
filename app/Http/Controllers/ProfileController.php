@@ -137,9 +137,12 @@ class ProfileController extends Controller
     }
 
     public static function getAvatarUrl(){
+        return self::getAvatarUrlUser(Auth::user());
+    }
+    public static function getAvatarUrlUser($user){
         $avatarUrl = asset('storage/default-user.png');
         if(!Auth::guest()) {
-            $user = User::where('id', Auth::user()->id)->first();
+            $user = User::where('id', $user->id)->first();
             $userDetails = $user->userDetails;
             if($userDetails->fileImage != null) {
                 $localUrl = $userDetails->fileImage->local_url;

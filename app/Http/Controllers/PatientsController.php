@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Medical\Doctor;
+use App\Models\Medical\Patient;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PatientsController extends Controller
 {
@@ -13,7 +17,17 @@ class PatientsController extends Controller
      */
     public function index()
     {
-        return view('patients');
+        $myPatients = null;
+        $doctor = Doctor::where('user_id', Auth::user()->id)->first();
+        $patientsToAdd = Patient::get();
+        if ($doctor)
+        {
+            $myPatients = User::join('patients','patients.user_id','users.id')
+                ->join('doctor_patient','doctor_patient.patient_id','patients.id')->get();
+        }
+        return view('patients')
+            ->with('users', $myPatients)
+            ->with('patients',$patientsToAdd);
     }
 
     /**

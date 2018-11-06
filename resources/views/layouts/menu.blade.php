@@ -1,8 +1,11 @@
+<li class="{{ Request::is('schedule*') ? 'active' : '' }}">
+    <a href="{!! route('schedule.index') !!}"><i class="fa fa-clock"></i><span>{{ __('schedule') }}</span></a>
+</li>
 <li class="{{ Request::is('patients*') ? 'active' : '' }}">
-    <a href="{!! route('patients.index') !!}"><i class="fa fa-user"></i><span>Patients</span></a>
+    <a href="{!! route('patients.index') !!}"><i class="fa fa-user"></i><span>{{ __('patients') }}</span></a>
 </li>
 <li class="{{ Request::is('calendar*') ? 'active' : '' }}">
-    <a href="{!! route('calendar.index') !!}"><i class="fa fa-calendar-alt"></i><span>Calendar</span></a>
+    <a href="{!! route('calendar.index') !!}"><i class="fa fa-calendar-alt"></i><span>{{ __('calendar') }}</span></a>
 </li>
 <li class="treeview active">
     <a href="#"><i class="fa fa-user-md"></i> <span>{{ __('medical') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
@@ -12,7 +15,7 @@
         </li>
 
         <li class="{{ Request::is('patients*') ? 'active' : '' }}">
-            <a href="{!! route('medical.patients.index') !!}"><i class="fa fa-user"></i><span>Patients</span></a>
+            <a href="{!! route('medical.patients.index') !!}"><i class="fa fa-user"></i><span>{{ __('patients') }}</span></a>
         </li>
 
         <li class="{{ Request::is('doctors*') ? 'active' : '' }}">

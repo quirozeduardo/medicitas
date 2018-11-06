@@ -12,12 +12,13 @@ class RoleTableSeeder extends Seeder
      */
     public function run()
     {
+        $roleAdministrator = Role::create(['name' => 'administrator']);
+        $roleAdministrator->syncPermissions(\Spatie\Permission\Models\Permission::get());
+
         $roles = [
-            'administrator',
             'doctor',
             'patient'
         ];
-
 
         foreach ($roles as $role) {
             Role::create(['name' => $role]);

@@ -4,6 +4,7 @@ return [
     'field_user' => 'User:',
     'field_medical_speciality' => 'Medical Speciality:',
     'field_medical_consultant' => 'Medical Consultant:',
+    'field_patients' => 'Patients:',
 
     'title_column_user' => 'User',
     'title_column_medical_speciality' => 'Medical Speciality',

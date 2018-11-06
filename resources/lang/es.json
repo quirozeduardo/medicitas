@@ -15,5 +15,8 @@
     "medical": "Medico",
     "male": "Masculino",
     "female": "Femenino",
-    "doctors": "Doctores"
+    "doctors": "Doctores",
+    "schedule": "Agendar",
+    "calendar": "Calendario",
+    "patients": "Pacientes"
 }

@@ -17,6 +17,12 @@
     {!! Form::select('medical_consultant_id', $medicalConsultants, old('medical_consultant_id'), ['class' => 'form-control select2-nullable']) !!}
 </div>
 
+<!-- Permissions Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('patients', __('doctors.field_patients')) !!}
+    {!! Form::select('patients[]', $patients, old('patients'), ['class' => 'form-control select2','multiple'=>'multiple']) !!}
+</div>
+
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
     {!! Form::submit(__('save'), ['class' => 'btn btn-primary']) !!}

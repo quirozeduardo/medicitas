@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth']],function(){
     Route::resource('profile', 'ProfileController');
     Route::resource('patients', 'PatientsController');
     Route::resource('calendar', 'CalendarController');
+    Route::resource('schedule', 'ScheduleController');
 });
 
 

@@ -24,7 +24,9 @@
     <link rel="stylesheet" href="{{ asset('plugins/datepicker/css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/timepicker/jquery.timepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
-    <link rel="stylesheet" href="{{ asset('plugins/fullcalendar/fullcalendar.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/calendar/css/jquery-calendar.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     @yield('css')
 </head>
@@ -317,6 +319,8 @@
     <script src="{{ asset('plugins/bootstrap3/js/bootstrap.min.js') }}"></script>
 
     <script src="{{ asset('js/moment.min.js') }}"></script>
+    <script src="{{ asset('js/moment-with-locales.js') }}"></script>
+    <script src="{{ asset('js/jquery.touchSwipe.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('plugins/AdminLTE/js/adminlte.min.js') }}"></script>
 
@@ -326,9 +330,7 @@
     <script src="{{ asset('plugins/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('plugins/timepicker/jquery.timepicker.min.js') }}"></script>
     <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
-
-
-    <script src="{{ asset('plugins/fullcalendar/fullcalendar.min.js') }}"></script>
+    <script src="{{ asset('plugins/calendar/js/jquery-calendar.min.js') }}"></script>
 
     <script src="{{ asset('js/app.js') }}"></script>
     <script !src="">

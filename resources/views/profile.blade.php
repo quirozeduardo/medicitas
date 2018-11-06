@@ -7,7 +7,7 @@
                 <a href="#profile" data-toggle="tab" aria-expanded="true">{{ __('profile') }}</a>
             </li>
             <li>
-                <a href="#doctors" data-toggle="tab" aria-expanded="true">{{ __('doctors') }}</a>
+                <a href="#algo" data-toggle="tab" aria-expanded="true">Algo mas</a>
             </li>
         </ul>
         <div class="tab-content">
@@ -95,12 +95,8 @@
                     {!! Form::close() !!}
                 </div>
             </div>
-            <div class="tab-pane" id="doctors">
-                @include('sections.profile_doctors')
+            <div class="tab-pane" id="algo">
             </div>
         </div>
     </div>
-@endsection
-
-@section('scripts')
 @endsection

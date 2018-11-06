@@ -6,8 +6,10 @@ use App\DataTables\Medical\DoctorDataTable;
 use App\Http\Requests\Medical;
 use App\Http\Requests\Medical\CreateDoctorRequest;
 use App\Http\Requests\Medical\UpdateDoctorRequest;
+use App\Models\Medical\DoctorPatient;
 use App\Models\Medical\MedicalConsultant;
 use App\Models\Medical\MedicalSpeciality;
+use App\Models\Medical\Patient;
 use App\Repositories\Medical\DoctorRepository;
 use App\User;
 use Flash;
@@ -45,10 +47,12 @@ class DoctorController extends AppBaseController
         $users = User::get()->pluck('name','id');
         $medicalSpecialties = MedicalSpeciality::get()->pluck('name','id');
         $medicalConsultants = MedicalConsultant::get()->pluck('name','id');
+        $patients = Patient::join('users','patients.user_id','users.id')->get()->pluck('user.name','id');
         return view('medical.doctors.create')
             ->with('users',$users)
             ->with('medicalSpecialties',$medicalSpecialties)
-            ->with('medicalConsultants',$medicalConsultants);
+            ->with('medicalConsultants',$medicalConsultants)
+            ->with('patients',$patients);
     }
 
     /**
@@ -63,6 +67,15 @@ class DoctorController extends AppBaseController
         $input = $request->all();
 
         $doctor = $this->doctorRepository->create($input);
+
+        $patients = $request->input('patients');
+        $dataRelationDoctorPatient = array();
+        if($patients) {
+            foreach ($patients as $patient) {
+                array_push($dataRelationDoctorPatient, array('patient_id' => $patient, 'doctor_id' => $doctor->id));
+            }
+        }
+        DoctorPatient::insert($dataRelationDoctorPatient);
 
         Flash::success('Doctor saved successfully.');
 
@@ -108,12 +121,13 @@ class DoctorController extends AppBaseController
         $users = User::get()->pluck('name','id');
         $medicalSpecialties = MedicalSpeciality::get()->pluck('name','id');
         $medicalConsultants = MedicalConsultant::get()->pluck('name','id');
-
+        $patients = Patient::join('users','patients.user_id','users.id')->get()->pluck('user.name','id');
 
         return view('medical.doctors.edit')->with('doctor', $doctor)
             ->with('users',$users)
             ->with('medicalSpecialties',$medicalSpecialties)
-            ->with('medicalConsultants',$medicalConsultants);
+            ->with('medicalConsultants',$medicalConsultants)
+            ->with('patients',$patients);
     }
 
     /**
@@ -135,6 +149,18 @@ class DoctorController extends AppBaseController
         }
         $input = $request->all();
         $doctor = $this->doctorRepository->update($request->all(), $id);
+
+        $patients = $request->input('patients');
+        $dataRelationDoctorPatient = array();
+        if($patients) {
+            foreach ($patients as $patient) {
+                $dataRelationDoctorPatient[]= ['patient_id' => $patient, 'doctor_id' => $doctor->id];
+            }
+        }
+
+        DoctorPatient::where('doctor_id',$doctor->id)->delete();
+        DoctorPatient::insert($dataRelationDoctorPatient);
+
 
         if(!array_key_exists('medical_consultant_id',$input)){
             $doctor->medical_consultant_id=null;
