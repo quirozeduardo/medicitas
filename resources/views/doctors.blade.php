@@ -3,7 +3,7 @@
     <div class="nav-tabs-custom content">
         <ul class="nav nav-tabs">
             <li class="active">
-                <a href="#my-patients" data-toggle="tab" aria-expanded="true">Mis pacientes</a>
+                <a href="#my-patients" data-toggle="tab" aria-expanded="true">Mis Doctores</a>
             </li>
             <li>
                 <a href="#all-patients" data-toggle="tab" aria-expanded="true">Todos</a>
@@ -11,24 +11,24 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="my-patients">
-                <h1>Mis Pacientes</h1>
+                <h1>Mis Doctores</h1>
                 @include('partials.profile_view_circle_list')
             </div>
             <div class="tab-pane" id="all-patients">
-                <h1>Pacientes</h1>
+                <h1>Doctores</h1>
                 <div>
                     <div class="box box-info">
-                        <div class="box-body">
+                        <div class="box-body no-padding">
                             <ul class="users-list clearfix">
-                                @if(isset($patients))
-                                    @foreach($patients as $patient)
+                                @if(isset($doctors))
+                                    @foreach($doctors as $doctor)
                                         <li>
-                                            <img class="user-profile-image" src="{{ \App\Http\Controllers\ProfileController::getAvatarUrlUser($patient->user) }}" alt="{{ $patient->user->name }}">
-                                            <a class="users-list-name" href="{!! route('patients.addPatient',$patient->id) !!}">{{ $patient->user->name }}</a>
+                                            <img class="user-profile-image" src="{{ \App\Http\Controllers\ProfileController::getAvatarUrlUser($doctor->user) }}" alt="{{ $doctor->user->name }}">
+                                            <a class="users-list-name" href="{!! route('doctors.addDoctor',$doctor->id) !!}">{{ $doctor->user->name }}</a>
                                             <span class="users-list-date">
-                                                <a href="{{ route('messenger.read',$patient->user->id)}}"><i class="fa fa-comments"></i> Mensaje</a>
+                                                <a href="{{ route('messenger.read',$doctor->user->id)}}"><i class="fa fa-comments"></i> Mensaje</a>
                                                 <br>
-                                                <a href="{{ route('patients.addPatient',$patient->id)}}"><i class="fa fa-user-plus"></i> Agregar</a>
+                                                <a href="{{ route('doctors.addDoctor',$doctor->id)}}"><i class="fa fa-user-plus"></i> Agregar</a>
                                             </span>
                                         </li>
                                     @endforeach
@@ -38,7 +38,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 @endsection

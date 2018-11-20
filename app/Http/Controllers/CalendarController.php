@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Medical\Doctor;
+use App\Models\Medical\MedicalAppointment;
+use App\Models\Medical\Patient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CalendarController extends Controller
 {
@@ -13,7 +17,19 @@ class CalendarController extends Controller
      */
     public function index()
     {
-        return view('calendar');
+        $patient = Patient::where('user_id',Auth::user()->id)->first();
+        $doctor = Doctor::where('user_id',Auth::user()->id)->first();
+
+        $patientAppointments = MedicalAppointment::where('patient_id',$patient->id)->get();
+        $doctorAppointments = null;
+        if($doctor)
+        {
+            $doctorAppointments = MedicalAppointment::where('doctor_id',$doctor->id)->get();
+        }
+
+        return view('calendar')
+            ->with('patientAppointments',$patientAppointments)
+            ->with('doctorAppointments',$doctorAppointments);
     }
 
     /**

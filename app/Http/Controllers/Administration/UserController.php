@@ -25,7 +25,7 @@ class UserController extends AppBaseController
     }
 
     /**
-     * Display a listing of the User.
+     * Display a listing of the Doctor.
      *
      * @param UserDataTable $userDataTable
      * @return Response
@@ -36,7 +36,7 @@ class UserController extends AppBaseController
     }
 
     /**
-     * Show the form for creating a new User.
+     * Show the form for creating a new Doctor.
      *
      * @return Response
      */
@@ -51,7 +51,7 @@ class UserController extends AppBaseController
     }
 
     /**
-     * Store a newly created User in storage.
+     * Store a newly created Doctor in storage.
      *
      * @param CreateUserRequest $request
      *
@@ -70,13 +70,13 @@ class UserController extends AppBaseController
         $user->syncRoles($roles);
         $user->syncPermissions($permissions);
 
-        Flash::success('User saved successfully.');
+        Flash::success('Doctor saved successfully.');
 
         return redirect(route('administration.users.index'));
     }
 
     /**
-     * Display the specified User.
+     * Display the specified Doctor.
      *
      * @param  int $id
      *
@@ -87,7 +87,7 @@ class UserController extends AppBaseController
         $user = $this->userRepository->findWithoutFail($id);
 
         if (empty($user)) {
-            Flash::error('User not found');
+            Flash::error('Doctor not found');
 
             return redirect(route('administration.users.index'));
         }
@@ -96,7 +96,7 @@ class UserController extends AppBaseController
     }
 
     /**
-     * Show the form for editing the specified User.
+     * Show the form for editing the specified Doctor.
      *
      * @param  int $id
      *
@@ -107,7 +107,7 @@ class UserController extends AppBaseController
         $user = $this->userRepository->findWithoutFail($id);
 
         if (empty($user)) {
-            Flash::error('User not found');
+            Flash::error('Doctor not found');
 
             return redirect(route('administration.users.index'));
         }
@@ -123,7 +123,7 @@ class UserController extends AppBaseController
     }
 
     /**
-     * Update the specified User in storage.
+     * Update the specified Doctor in storage.
      *
      * @param  int              $id
      * @param UpdateUserRequest $request
@@ -135,7 +135,7 @@ class UserController extends AppBaseController
         $user = $this->userRepository->findWithoutFail($id);
 
         if (empty($user)) {
-            Flash::error('User not found');
+            Flash::error('Doctor not found');
 
             return redirect(route('administration.users.index'));
         }
@@ -152,13 +152,13 @@ class UserController extends AppBaseController
         $user->syncRoles($roles);
         $user->syncPermissions($permissions);
 
-        Flash::success('User updated successfully.');
+        Flash::success('Doctor updated successfully.');
 
         return redirect(route('administration.users.index'));
     }
 
     /**
-     * Remove the specified User from storage.
+     * Remove the specified Doctor from storage.
      *
      * @param  int $id
      *
@@ -169,7 +169,7 @@ class UserController extends AppBaseController
         $user = $this->userRepository->findWithoutFail($id);
 
         if (empty($user)) {
-            Flash::error('User not found');
+            Flash::error('Doctor not found');
 
             return redirect(route('administration.users.index'));
         }
@@ -179,7 +179,7 @@ class UserController extends AppBaseController
 
         $this->userRepository->delete($id);
 
-        Flash::success('User deleted successfully.');
+        Flash::success('Doctor deleted successfully.');
 
         return redirect(route('administration.users.index'));
     }

@@ -23,5 +23,20 @@ class RoleTableSeeder extends Seeder
         foreach ($roles as $role) {
             Role::create(['name' => $role]);
         }
+        $user = \App\User::create([
+            'name' => 'admin',
+            'last_name' => 'admin',
+            'birthdate' => \Carbon\Carbon::now(),
+            'gender' => true,
+            'email' => 'admin@admin.com',
+            'password' => Hash::make('123456'),
+        ]);
+        $user_details = \App\Models\UserDetails::create([
+            'user_id' => $user->id
+        ]);
+        $patient = Patient::create([
+            'user_id' => $user->id
+        ]);
+        $user->assignRole('administrator');
     }
 }

@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.body')
 
-@section('content')
+@section('body')
 <div class="content">
     <div class="row">
         <article class="col-sm-12">

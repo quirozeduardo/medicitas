@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Medical\Doctor;
+use App\Models\Medical\DoctorPatient;
 use App\Models\Medical\Patient;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laracasts\Flash\Flash;
 
 class PatientsController extends Controller
 {
@@ -19,80 +21,55 @@ class PatientsController extends Controller
     {
         $myPatients = null;
         $doctor = Doctor::where('user_id', Auth::user()->id)->first();
-        $patientsToAdd = Patient::get();
+        $patient = Patient::where('user_id', Auth::user()->id)->first();
+        $patientsToAdd = null;
+
         if ($doctor)
         {
-            $myPatients = User::join('patients','patients.user_id','users.id')
-                ->join('doctor_patient','doctor_patient.patient_id','patients.id')->get();
+            $patients = Patient::select('patients.user_id','patients.id')
+                ->join('doctor_patient','doctor_patient.patient_id','patients.id')
+                ->where('doctor_patient.doctor_id',$doctor->id)->get();
+
+            $myPatients = User::whereIn('id',$patients->pluck('user_id'))->get();
+            if($patients)
+            {
+                if($patient)
+                {
+                    $patientsToAdd = Patient::whereNotIn('id', $patients->pluck('id'))
+                        ->where('id', '!=', $patient->id)->get();
+                }else {
+                    $patientsToAdd = Patient::whereNotIn('id', $patients->pluck('id'))->get();
+                }
+            }else
+            {
+                if($patient)
+                {
+                    $patientsToAdd = Patient::where('id', '!=', $patient->id)->get();
+                }else
+                {
+                    $patientsToAdd = Patient::get();
+                }
+
+            }
         }
         return view('patients')
             ->with('users', $myPatients)
             ->with('patients',$patientsToAdd);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function addPatient($id){
+        $doctor = Doctor::where('user_id', Auth::user()->id)->first();
+        $doctorPatient = DoctorPatient::where('patient_id',$id)
+            ->where('doctor_id',$doctor->id)->first();
+        if(!$doctorPatient)
+        {
+            $doctorPatient = new DoctorPatient;
+            $doctorPatient->patient_id = $id;
+            $doctorPatient->doctor_id = $doctor->id;
+            $doctorPatient->save();
+        }else
+        {
+            Flash::overlay('Y se envio la solicitud anteriormente','Mensaje');
+        }
+        return redirect(route('patients.index'));
     }
 }

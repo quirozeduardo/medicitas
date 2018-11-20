@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Medical\Patient;
 use App\Models\UserDetails;
 use App\User;
 use App\Http\Controllers\Controller;
@@ -79,6 +80,10 @@ class RegisterController extends Controller
         $user_details = UserDetails::create([
             'user_id' => $user->id
         ]);
+        $patient = Patient::create([
+            'user_id' => $user->id
+        ]);
+        $user->assignRole('patient');
         return $user;
     }
 }

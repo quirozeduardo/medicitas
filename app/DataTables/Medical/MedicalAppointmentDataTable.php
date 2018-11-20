@@ -27,8 +27,11 @@ class MedicalAppointmentDataTable extends DataTable
             return '<a href="'.route('medical.doctors.show',$data->doctor->id).'">'.$data->doctor->user->name.'</a>';
         });
         $dataTable->editColumn('medical_consultant_id',function($data){
-
-            return '<a href="'.route('medical.medicalConsultants.show',$data->medicalConsultant->id).'">'.$data->medicalConsultant->name.'</a>';
+            if($data->medicalConsultant) {
+                return '<a href="' . route('medical.medicalConsultants.show', $data->medicalConsultant->id) . '">' . $data->medicalConsultant->name . '</a>';
+            }else{
+                return '';
+            }
         });
         $dataTable->editColumn('medical_appointment_status_id',function($data){
 

@@ -17,11 +17,36 @@ Route::get('/', 'HomeController@index');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+
 Route::group(['middleware' => ['auth']],function(){
     Route::resource('profile', 'ProfileController');
-    Route::resource('patients', 'PatientsController');
+
+    Route::group(['middleware' => ['doctor']],function() {
+        Route::get('patients', 'PatientsController@index')->name('patients.index');
+        Route::get('patients/addPatient/{id}', 'PatientsController@addPatient')->name('patients.addPatient');
+    });
+
+    Route::group(['middleware' => ['patient']],function() {
+        Route::get('doctors', 'DoctorsController@index')->name('doctors.index');
+        Route::get('doctors/addDoctor/{id}', 'DoctorsController@addDoctor')->name('doctors.addDoctor');
+    });
+
+
+
     Route::resource('calendar', 'CalendarController');
     Route::resource('schedule', 'ScheduleController');
+
+    Route::get('messenger/', 'MessageController@show')->name('messenger.show');
+    Route::get('messenger/{id}', 'MessageController@chatHistory')->name('messenger.read');
+
+
+    Route::group(['prefix'=>'ajax', 'as'=>'ajax::'], function() {
+        Route::post('message/send', 'MessageController@ajaxSendMessage')->name('message.new');
+        Route::delete('message/delete/{id}', 'MessageController@ajaxDeleteMessage')->name('message.delete');
+    });
+
 });
 
 

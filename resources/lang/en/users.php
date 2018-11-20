@@ -21,6 +21,6 @@ return [
     'title_column_permissions' => 'Permissions',
 
     'title_users' => 'Users',
-    'title_user' => 'User'
+    'title_user' => 'Doctor'
 
 ];

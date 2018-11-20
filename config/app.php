@@ -172,12 +172,14 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
 
         Sujip\Guid\GuidServiceProvider::class,
+
+        Nahid\Talk\TalkServiceProvider::class,
         /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        //App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
@@ -235,6 +237,8 @@ return [
         'Flash'     => Laracasts\Flash\Flash::class,
 
         'Guid' => Sujip\Guid\Guid::class,
+
+        'Talk'      => Nahid\Talk\Facades\Talk::class,
 
     ],
 

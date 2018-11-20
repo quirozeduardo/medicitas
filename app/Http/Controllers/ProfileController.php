@@ -24,7 +24,7 @@ class ProfileController extends Controller
 
         $model = $this->modelProfile(Auth::user()->id);
 
-        return view('profile')
+        return view('profile.edit')
             ->with('model',$model)
             ->with('avatarUrl',$avatarUrl);
     }
@@ -58,7 +58,13 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        //
+        $avatarUrl = self::getAvatarUrlUser(User::where('id',$id)->first());
+
+        $model = $this->modelProfile($id);
+
+        return view('profile.show')
+            ->with('model',$model)
+            ->with('avatarUrl',$avatarUrl);
     }
 
     /**
@@ -81,7 +87,7 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::where('id',$id)->first();
+        $user = User::where('id',Auth::user()->id)->first();
         $profile = $user->userDetails;
         //Storage::disk('images')->delete(''.$profile->image);
         $guid = File::guidDistinct();
@@ -114,7 +120,7 @@ class ProfileController extends Controller
         $user->email = $request->input('email');
         $user->save();
 
-        Flash::success('UserDetails updated successfully.');
+        Flash::overlay('UserDetails updated successfully.');
 
         return redirect(route('profile.index'));
     }
@@ -142,7 +148,6 @@ class ProfileController extends Controller
     public static function getAvatarUrlUser($user){
         $avatarUrl = asset('storage/default-user.png');
         if(!Auth::guest()) {
-            $user = User::where('id', $user->id)->first();
             $userDetails = $user->userDetails;
             if($userDetails->fileImage != null) {
                 $localUrl = $userDetails->fileImage->local_url;
