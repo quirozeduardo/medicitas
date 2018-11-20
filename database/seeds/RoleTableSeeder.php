@@ -34,7 +34,7 @@ class RoleTableSeeder extends Seeder
         $user_details = \App\Models\UserDetails::create([
             'user_id' => $user->id
         ]);
-        $patient = Patient::create([
+        $patient = \App\Models\Medical\Patient::create([
             'user_id' => $user->id
         ]);
         $user->assignRole('administrator');
