@@ -36,8 +36,11 @@
     $avatarUrl = \App\Http\Controllers\ProfileController::getAvatarUrl();
     $lastThreads = \App\Http\Controllers\MessageController::lastThreads();
     $countThreads = \App\Http\Controllers\MessageController::countNotReaded();
+    if(!Auth::guest())
+    {
     $notifications = \App\Http\Controllers\NotificationsController::getNotifications(Auth::user()->id);
     $countNotifications = $notifications->count();
+    }
 @endphp
 
 <div id="app">
@@ -168,12 +171,13 @@
                 @else
                     <ul class="nav navbar-nav navbar-right margin-r-5">
                         <!-- Authentication Links -->
-                        <li><a href="{!! url('/login') !!}">Login</a></li>
-                        <li><a href="{!! url('/register') !!}">Register</a></li>
+                        <li><a href="{!! url('/login') !!}">Iniciar sesion</a></li>
+                        <li><a href="{!! url('/register') !!}">Registrarse</a></li>
                     </ul>
                 @endif
             </nav>
         </header>
+
 
         <!-- Left side column. contains the logo and sidebar -->
         @include('layouts.sidebar')

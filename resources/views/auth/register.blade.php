@@ -1,18 +1,25 @@
 @include('components.macros_icheck')
 @extends('layouts.app')
+@section('css')
+    <style>
+        .content-wrapper{
+            background: url('{{ asset('images/bg_register.jpg') }}');
+        }
+    </style>
+@endsection
 @section('content')
     <div class="row content">
 
         <div class="col-sm-4"></div>
         <div class="col-sm-4 center-block register-box-body">
-            <p class="login-box-msg">Register a new membership</p>
+            <p class="login-box-msg">REGISTRAR UN NUEVO USUARIO</p>
 
             <form method="post" action="{{ url('/register') }}">
 
                 {!! csrf_field() !!}
 
                 <div class="form-group has-feedback{{ $errors->has('name') ? ' has-error' : '' }}">
-                    <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Name">
+                    <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Nombre">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
 
                     @if ($errors->has('name'))
@@ -23,7 +30,7 @@
                 </div>
 
                 <div class="form-group has-feedback{{ $errors->has('last_name') ? ' has-error' : '' }}">
-                    <input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}" placeholder="Last Name">
+                    <input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}" placeholder="Apellidos">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
 
                     @if ($errors->has('last_name'))
@@ -92,7 +99,7 @@
                     <div class="col-xs-8">
                         <div class="checkbox icheck">
                             <label>
-                                <input type="checkbox"> I agree to the <a href="#">terms</a>
+                                <input type="checkbox"> Acepto los <a href="#">terminos</a>
                             </label>
                         </div>
                     </div>
@@ -104,7 +111,7 @@
                 </div>
             </form>
 
-            <a href="{{ url('/login') }}" class="text-center">I already have a membership</a>
+            <a href="{{ url('/login') }}" class="text-center">Ya tengo un usuario</a>
         </div>
         <!-- /.form-box -->
         <div class="col-sm-4"></div>

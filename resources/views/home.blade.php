@@ -18,6 +18,9 @@
                 - Gestion de Consultorios <br/>
                 - Gestion de Usuarios con Acceso al Sistema <br/>
             </p>
+
+            <br>
+            <h2 class="text-center">Asesor: MC. HUGO DE LA ROSA CONDEY</h2>
         </article>
     </div>
 </div>

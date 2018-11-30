@@ -1,10 +1,17 @@
 @extends('layouts.app')
+@section('css')
+    <style>
+        .content-wrapper{
+            background: url('{{ asset('images/bg_login.jpg') }}');
+        }
+    </style>
+@endsection
 @section('content')
     <div class="row content">
         <div class="col-sm-4"></div>
         <!-- /.login-logo -->
         <div class="col-sm-4 login-box-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg">INICIAR SESION</p>
 
             <form method="post" action="{{ url('/login') }}">
                 {!! csrf_field() !!}
@@ -33,20 +40,20 @@
                     <div class="col-xs-8">
                         <div class="checkbox icheck">
                             <label>
-                                <input type="checkbox" name="remember"> Remember Me
+                                <input type="checkbox" name="remember"> Recordar
                             </label>
                         </div>
                     </div>
                     <!-- /.col -->
                     <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
                     </div>
                     <!-- /.col -->
                 </div>
             </form>
 
-            <a href="{{ url('/password/reset') }}">I forgot my password</a><br>
-            <a href="{{ url('/register') }}" class="text-center">Register a new membership</a>
+            <a href="{{ url('/password/reset') }}">Olvide mi contraseña</a><br>
+            <a href="{{ url('/register') }}" class="text-center">Registrar un nuevo usuario</a>
 
         </div>
         <div class="col-sm-4"></div>
