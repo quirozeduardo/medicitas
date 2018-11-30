@@ -16,8 +16,12 @@ class CreateNotificationsTable extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->boolean('is_seen');
             $table->unsignedInteger('user_id');
+            $table->boolean('is_seen');
+            $table->string('redirect',256)->nullable(true);
+            $table->string('redirect_param_1')->nullable(true);
+            $table->string('redirect_param_2')->nullable(true);
+            $table->string('redirect_param_3')->nullable(true);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

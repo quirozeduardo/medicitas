@@ -45,6 +45,8 @@ Route::group(['middleware' => ['auth']],function(){
     Route::get('messenger/', 'MessageController@show')->name('messenger.show');
     Route::get('messenger/{id}', 'MessageController@chatHistory')->name('messenger.read');
 
+    Route::get('notifications/open/{id}', 'NotificationsController@open')->name('notifications.open');
+
 
     Route::group(['prefix'=>'ajax', 'as'=>'ajax::'], function() {
         Route::post('message/send', 'MessageController@ajaxSendMessage')->name('message.new');

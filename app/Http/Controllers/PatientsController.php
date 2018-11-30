@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Medical\Doctor;
 use App\Models\Medical\DoctorPatient;
 use App\Models\Medical\Patient;
+use App\Models\Notification;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -81,16 +82,28 @@ class PatientsController extends Controller
     public function acceptPatient($id)
     {
         return $this->changeAccepted($id,true);
+
     }
     public function changeAccepted($id,$value)
     {
-        $doctor = Patient::where('user_id', Auth::user()->id)->first();
+        $doctor = Doctor::where('user_id', Auth::user()->id)->first();
         $doctorPatient = DoctorPatient::where('patient_id',$id)
             ->where('doctor_id',$doctor->id)->first();
         if($doctorPatient)
         {
             $doctorPatient->accepted = $value;
             $doctorPatient->save();
+        }
+        if($value == true)
+        {
+            $patient = Patient::where('id',$id)->first();
+            $notification = new Notification;
+            $notification->name = 'El doctor '.$doctor->user->name .' acepto tu solicitud';
+            $notification->is_seen = false;
+            $notification->user_id = $patient->user->id;
+            $notification->redirect= 'profile.show';
+            $notification->redirect_param_1= $doctor->user->id;
+            $notification->save();
         }
         return redirect(route('patients.index'));
     }
