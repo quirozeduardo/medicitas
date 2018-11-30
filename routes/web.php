@@ -26,11 +26,15 @@ Route::group(['middleware' => ['auth']],function(){
     Route::group(['middleware' => ['doctor']],function() {
         Route::get('patients', 'PatientsController@index')->name('patients.index');
         Route::get('patients/addPatient/{id}', 'PatientsController@addPatient')->name('patients.addPatient');
+        Route::get('patients/rejectPatient/{id}', 'PatientsController@rejectPatient')->name('patients.rejectPatient');
+        Route::get('patients/acceptPatient/{id}', 'PatientsController@acceptPatient')->name('patients.acceptPatient');
     });
 
     Route::group(['middleware' => ['patient']],function() {
         Route::get('doctors', 'DoctorsController@index')->name('doctors.index');
         Route::get('doctors/addDoctor/{id}', 'DoctorsController@addDoctor')->name('doctors.addDoctor');
+        Route::get('patients/rejectDoctor/{id}', 'DoctorsController@rejectDoctor')->name('doctors.rejectDoctor');
+        Route::get('patients/acceptDoctor/{id}', 'DoctorsController@acceptDoctor')->name('doctors.acceptDoctor');
     });
 
 
@@ -45,6 +49,8 @@ Route::group(['middleware' => ['auth']],function(){
     Route::group(['prefix'=>'ajax', 'as'=>'ajax::'], function() {
         Route::post('message/send', 'MessageController@ajaxSendMessage')->name('message.new');
         Route::delete('message/delete/{id}', 'MessageController@ajaxDeleteMessage')->name('message.delete');
+
+        Route::post('schedule/appointmentsDoctor', 'ScheduleController@ajaxAppointmentsDoctor')->name('schedule.appointmentsDoctor');
     });
 
 });

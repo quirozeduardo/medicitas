@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Medical\CreateMedicalAppointmentRequest;
 use App\Models\Medical\Doctor;
 use App\Models\Medical\DoctorPatient;
+use App\Models\Medical\MedicalAppointment;
 use App\Models\Medical\Patient;
 use App\Repositories\Medical\MedicalAppointmentRepository;
 use Illuminate\Http\Request;
@@ -29,7 +30,8 @@ class ScheduleController extends Controller
     {
         $patient = Patient::where('user_id', Auth::user()->id)->first();
         $doctorPatient = DoctorPatient::select('doctor_patient.doctor_id')
-            ->where('doctor_patient.patient_id',$patient->id)->get();
+            ->where('doctor_patient.patient_id',$patient->id)
+            ->where('accepted',true)->get();
         $doctors = Doctor::join('users','doctors.user_id','users.id')
             ->whereIn('doctors.id',$doctorPatient)->pluck('users.name','doctors.id');
         return view('schedule')
@@ -45,7 +47,6 @@ class ScheduleController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -116,5 +117,23 @@ class ScheduleController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function ajaxAppointmentsDoctor(Request $request){
+        if($request->ajax())
+        {
+            $doctor = Doctor::where('id',$request->input('doctor_id'))->first();
+            if($doctor){
+                $medicalAppointments =  MedicalAppointment::where('doctor_id',$doctor->id)
+                ->where('date',$request->input('date'))->orderBy('time_start', 'ASC')->get();
+                if($medicalAppointments){
+                    return json_encode($medicalAppointments->toArray());
+                }
+
+            }
+            return "";
+        }
+
+        return '';
     }
 }

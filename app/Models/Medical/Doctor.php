@@ -3,6 +3,7 @@
 namespace App\Models\Medical;
 
 use Eloquent as Model;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class Doctor
@@ -90,5 +91,10 @@ class Doctor extends Model
     public function patients()
     {
         return $this->belongsToMany(\App\Models\Medical\Patient::class, 'doctor_patient');
+    }
+
+    public function doctorPatient()
+    {
+        return $this->hasMany(\App\Models\Medical\DoctorPatient::class);
     }
 }

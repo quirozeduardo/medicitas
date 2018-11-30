@@ -28,7 +28,21 @@
                                             <span class="users-list-date">
                                                 <a href="{{ route('messenger.read',$patient->user->id)}}"><i class="fa fa-comments"></i> Mensaje</a>
                                                 <br>
-                                                <a href="{{ route('patients.addPatient',$patient->id)}}"><i class="fa fa-user-plus"></i> Agregar</a>
+                                                @if(! ($doctorPatient = $patient->doctorPatient->first()))
+                                                    <a href="{{ route('patients.addPatient',$patient->id)}}"><i class="fa fa-user-plus"></i> Agregar</a>
+                                                @else
+                                                    @if($send_by_patient = $doctorPatient->send_by_patient == true)
+                                                        <a href="{{ route('patients.acceptPatient',$patient->id)}}"><i class="fa fa-user-plus"></i> Aceptar</a>
+                                                        <br>
+                                                        <a href="{{ route('patients.rejectPatient',$patient->id)}}"><i class="fa fa-user-times"></i> Rechazar</a>
+                                                    @elseif($send_by_patient == false)
+                                                        @if($doctorPatient->accepted === null)
+                                                            Solicitud enviada
+                                                        @elseif($doctorPatient->accepted == false)
+                                                            <p class="text-danger">Solicitud Rechazada</p>
+                                                        @endif
+                                                    @endif
+                                                @endif
                                             </span>
                                         </li>
                                     @endforeach

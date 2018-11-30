@@ -72,7 +72,7 @@ class DoctorController extends AppBaseController
         $dataRelationDoctorPatient = array();
         if($patients) {
             foreach ($patients as $patient) {
-                array_push($dataRelationDoctorPatient, array('patient_id' => $patient, 'doctor_id' => $doctor->id));
+                array_push($dataRelationDoctorPatient, array('patient_id' => $patient, 'doctor_id' => $doctor->id, 'accepted' => true));
             }
         }
         DoctorPatient::insert($dataRelationDoctorPatient);
@@ -154,7 +154,7 @@ class DoctorController extends AppBaseController
         $dataRelationDoctorPatient = array();
         if($patients) {
             foreach ($patients as $patient) {
-                $dataRelationDoctorPatient[]= ['patient_id' => $patient, 'doctor_id' => $doctor->id];
+                $dataRelationDoctorPatient[]= ['patient_id' => $patient, 'doctor_id' => $doctor->id, 'accepted' => true];
             }
         }
 

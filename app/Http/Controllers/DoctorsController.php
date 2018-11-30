@@ -22,7 +22,8 @@ class DoctorsController extends Controller
         {
             $doctors = Doctor::select('doctors.user_id','doctors.id')
                 ->join('doctor_patient','doctor_patient.doctor_id','doctors.id')
-                ->where('doctor_patient.patient_id',$patient->id)->get();
+                ->where('doctor_patient.patient_id',$patient->id)
+                ->where('doctor_patient.accepted',true)->get();
             $myDoctors = User::whereIn('id',$doctors->pluck('user_id'))->get();
             if($doctors)
             {
@@ -60,10 +61,31 @@ class DoctorsController extends Controller
             $doctorPatient = new DoctorPatient;
             $doctorPatient->patient_id = $patient->id;
             $doctorPatient->doctor_id = $id;
+            $doctorPatient->send_by_patient = true;
             $doctorPatient->save();
         }else
         {
             Flash::overlay('Y se envio la solicitud anteriormente','Mensaje');
+        }
+        return redirect(route('doctors.index'));
+    }
+    public function rejectDoctor($id)
+    {
+        return $this->changeAccepted($id,false);
+    }
+    public function acceptDoctor($id)
+    {
+        return $this->changeAccepted($id,true);
+    }
+    public function changeAccepted($id,$value)
+    {
+        $patient = Patient::where('user_id', Auth::user()->id)->first();
+        $doctorPatient = DoctorPatient::where('doctor_id',$id)
+            ->where('patient_id',$patient->id)->first();
+        if($doctorPatient)
+        {
+            $doctorPatient->accepted = $value;
+            $doctorPatient->save();
         }
         return redirect(route('doctors.index'));
     }

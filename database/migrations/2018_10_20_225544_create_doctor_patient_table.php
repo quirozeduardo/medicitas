@@ -17,7 +17,8 @@ class CreateDoctorPatientTable extends Migration
             $table->increments('id');
             $table->integer('doctor_id')->unsigned();
             $table->integer('patient_id')->unsigned();
-            $table->boolean('accepted')->default(false);
+            $table->boolean('accepted')->nullable(true)->default(null);
+            $table->boolean('send_by_patient')->nullable(true)->default(null);
             $table->timestamps();
 
             $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');

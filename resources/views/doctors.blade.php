@@ -28,7 +28,21 @@
                                             <span class="users-list-date">
                                                 <a href="{{ route('messenger.read',$doctor->user->id)}}"><i class="fa fa-comments"></i> Mensaje</a>
                                                 <br>
-                                                <a href="{{ route('doctors.addDoctor',$doctor->id)}}"><i class="fa fa-user-plus"></i> Agregar</a>
+                                                @if(! ($doctorPatient = $doctor->doctorPatient->first()))
+                                                    <a href="{{ route('doctors.addDoctor',$doctor->id)}}"><i class="fa fa-user-plus"></i> Agregar</a>
+                                                @else
+                                                    @if($send_by_patient = $doctorPatient->send_by_patient == true)
+                                                        @if($doctorPatient->accepted === null)
+                                                            Solicitud enviada
+                                                        @elseif($doctorPatient->accepted == false)
+                                                            <p class="text-danger">Solicitud Rechazada</p>
+                                                        @endif
+                                                    @elseif($send_by_patient == false)
+                                                        <a href="{{ route('doctors.acceptDoctor',$doctor->id)}}"><i class="fa fa-user-plus"></i> Aceptar</a>
+                                                        <br>
+                                                        <a href="{{ route('doctors.rejectDoctor',$doctor->id)}}"><i class="fa fa-user-times"></i> Rechazar</a>
+                                                    @endif
+                                                @endif
                                             </span>
                                         </li>
                                     @endforeach
