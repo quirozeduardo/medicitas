@@ -1,6 +1,13 @@
+@role('patient')
 <li class="{{ Request::is('schedule*') ? 'active' : '' }}">
     <a href="{!! route('schedule.index') !!}"><i class="fa fa-clock"></i><span>{{ __('schedule') }}</span></a>
 </li>
+@endrole
+@role('doctor')
+<li class="{{ Request::is('schedulePatient*') ? 'active' : '' }}">
+    <a href="{!! route('schedulePatient.index') !!}"><i class="fa fa-clock"></i><span>Agendar a Paciente</span></a>
+</li>
+@endrole
 @hasanyrole('doctor|administrator')
 <li class="{{ Request::is('patients*') ? 'active' : '' }}">
     <a href="{!! route('patients.index') !!}"><i class="fa fa-user"></i><span>{{ __('patients') }}</span></a>

@@ -25,19 +25,20 @@
                                         <li>
                                             <img class="user-profile-image" src="{{ \App\Http\Controllers\ProfileController::getAvatarUrlUser($doctor->user) }}" alt="{{ $doctor->user->name }}">
                                             <a class="users-list-name" href="{!! route('doctors.addDoctor',$doctor->id) !!}">{{ $doctor->user->name }}</a>
+                                            <a href=""><h4>{{ $doctor->medicalSpeciality->name }}</h4></a>
                                             <span class="users-list-date">
                                                 <a href="{{ route('messenger.read',$doctor->user->id)}}"><i class="fa fa-comments"></i> Mensaje</a>
                                                 <br>
                                                 @if(! ($doctorPatient = $doctor->doctorPatient->first()))
                                                     <a href="{{ route('doctors.addDoctor',$doctor->id)}}"><i class="fa fa-user-plus"></i> Agregar</a>
                                                 @else
-                                                    @if($send_by_patient = $doctorPatient->send_by_patient == true)
-                                                        @if($doctorPatient->accepted === null)
+                                                    @if($send_by = $doctorPatient->send_by == Auth::user()->id)
+                                                        @if($doctorPatient->accepted == null)
                                                             Solicitud enviada
                                                         @elseif($doctorPatient->accepted == false)
                                                             <p class="text-danger">Solicitud Rechazada</p>
                                                         @endif
-                                                    @elseif($send_by_patient == false)
+                                                    @else
                                                         <a href="{{ route('doctors.acceptDoctor',$doctor->id)}}"><i class="fa fa-user-plus"></i> Aceptar</a>
                                                         <br>
                                                         <a href="{{ route('doctors.rejectDoctor',$doctor->id)}}"><i class="fa fa-user-times"></i> Rechazar</a>

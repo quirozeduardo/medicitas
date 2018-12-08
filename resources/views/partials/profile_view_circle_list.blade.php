@@ -8,6 +8,9 @@
                             <li>
                                 <img class="user-profile-image" src="{{ \App\Http\Controllers\ProfileController::getAvatarUrlUser($user) }}" alt="{{ $user->name }}">
                                 <a class="users-list-name" href="{{ route('profile.show',$user->id) }}">{{ $user->name }}</a>
+                                @if($doctor = \App\Models\Medical\Doctor::where('user_id',$user->id)->first())
+                                    <a href=""><h4>{{ $doctor->medicalSpeciality->name }}</h4></a>
+                                @endif
                                 <span class="users-list-date">
                                     <a href="{{ route('messenger.read',$user->id)}}"><i class="fa fa-comments"></i> Mensaje</a>
                                 </span>

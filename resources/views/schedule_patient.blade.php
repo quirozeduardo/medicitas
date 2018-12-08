@@ -4,12 +4,12 @@
         <div class="content">
             <div class="box box-info">
                 <div class="box-body">
-                    {!! Form::open(['route' => ['schedule.store']]) !!}
+                    {!! Form::open(['route' => ['schedulePatient.store']]) !!}
                     <div class="form-horizontal" role="form">
                         <div class="form-group">
-                            {!! Form::label('doctor_id', __('medical_appointments.field_doctor'),['class' => 'col-lg-3 control-label']) !!}
+                            {!! Form::label('patient_id', __('medical_appointments.field_doctor'),['class' => 'col-lg-3 control-label']) !!}
                             <div class="col-lg-8">
-                                {!! Form::select('doctor_id', $doctors, old('doctor_id'), ['class' => 'form-control select2']) !!}
+                                {!! Form::select('patient_id', $patients, old('patient_id'), ['class' => 'form-control select2']) !!}
                             </div>
                         </div>
                         <div class="form-group">
@@ -34,8 +34,8 @@
                             </div>
                         </div>
                         <!-- Submit Field -->
-                        @if($doctors)
-                            @if($doctors->count()>0)
+                        @if($patients)
+                            @if($patients->count()>0)
                                 <div class="form-group">
                                     <label class="col-md-3 control-label"></label>
                                     <div class="col-md-8">
@@ -45,7 +45,7 @@
                                     </div>
                                 </div>
                             @else
-                                <h4 class="text-center">No Hay Doctores</h4>
+                                <h4 class="text-center">No Hay Pacientes</h4>
                             @endif
                         @endif
                     </div>
@@ -69,6 +69,7 @@
             }
         });
         $(document).ready(function () {
+
 
             $('#date').val(moment().format('YYYY-MM-DD'));
             refreshCalendar();
@@ -104,9 +105,9 @@
         function refreshCalendar() {
             var request = $.ajax({
                 method: 'post',
-                url: "{{url('/')}}"+'/ajax/schedule/appointmentsDoctor',
+                url: "{{url('/')}}"+'/ajax/schedulePatient/appointmentsPatient',
                 data: {
-                    doctor_id: $('#doctor_id').val(),
+                    patient_id: $('#patient_id').val(),
                     date: $('#date').val()
                 }
             });
@@ -163,7 +164,9 @@
                     setTime(moment.unix(evt.start).format("HH:MM"),moment.unix(evt.end).format("HH:MM"));
                 });
             });
+            function as(ev){
 
+            }
         }
     </script>
 @endsection

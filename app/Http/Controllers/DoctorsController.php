@@ -62,7 +62,7 @@ class DoctorsController extends Controller
             $doctorPatient = new DoctorPatient;
             $doctorPatient->patient_id = $patient->id;
             $doctorPatient->doctor_id = $id;
-            $doctorPatient->send_by_patient = true;
+            $doctorPatient->send_by = Auth::user()->id;
             $doctorPatient->save();
         }else
         {

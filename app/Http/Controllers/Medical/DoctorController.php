@@ -76,7 +76,8 @@ class DoctorController extends AppBaseController
             }
         }
         DoctorPatient::insert($dataRelationDoctorPatient);
-
+        $user = User::where('id',$doctor->user_id)->first();
+        $user->assignRole('doctor');
         Flash::success('Doctor saved successfully.');
 
         return redirect(route('medical.doctors.index'));
