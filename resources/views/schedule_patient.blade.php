@@ -7,7 +7,7 @@
                     {!! Form::open(['route' => ['schedulePatient.store']]) !!}
                     <div class="form-horizontal" role="form">
                         <div class="form-group">
-                            {!! Form::label('patient_id', __('medical_appointments.field_doctor'),['class' => 'col-lg-3 control-label']) !!}
+                            {!! Form::label('patient_id', 'Paciente: ',['class' => 'col-lg-3 control-label']) !!}
                             <div class="col-lg-8">
                                 {!! Form::select('patient_id', $patients, old('patient_id'), ['class' => 'form-control select2']) !!}
                             </div>
