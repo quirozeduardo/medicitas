@@ -20,7 +20,6 @@
             </p>
 
             <br>
-            <h2 class="text-center">Asesor: MC. HUGO DE LA ROSA CONDEY</h2>
         </article>
     </div>
 </div>
