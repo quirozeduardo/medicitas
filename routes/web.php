@@ -76,3 +76,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'medical', 'as' => 'medical.
     Route::resource('medicalSpecialties', 'Medical\MedicalSpecialityController');
 
 });
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'laboratory', 'as' => 'laboratory.'], function () {
+    Route::resource('typeAnalises', 'Laboratory\TypeAnalisisController');
+    Route::resource('analises', 'Laboratory\AnalisisController');
+});

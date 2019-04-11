@@ -21,6 +21,23 @@
 <li class="{{ Request::is('calendar*') ? 'active' : '' }}">
     <a href="{!! route('calendar.index') !!}"><i class="fa fa-calendar-alt"></i><span>{{ __('calendar') }}</span></a>
 </li>
+@hasanyrole('doctor|administrator')
+<li class="treeview active">
+    <a href="#"><i class="fa fa-microscope"></i> <span>Laboratorio</span> <i class="fa fa-angle-left pull-right"></i></a>
+    <ul class="treeview-menu">
+        @role('doctor|administrator')
+        <li class="{{ Request::is('analises*') ? 'active' : '' }}">
+            <a href="{!! route('laboratory.analises.index') !!}"><i class="fa fa-syringe"></i><span>Analisis</span></a>
+        </li>
+        @endrole
+        @role('administrator')
+        <li class="{{ Request::is('typeAnalises*') ? 'active' : '' }}">
+            <a href="{!! route('laboratory.typeAnalises.index') !!}"><i class="fa fa-edit"></i><span>Tipo de Analisis</span></a>
+        </li>
+        @endrole
+    </ul>
+</li>
+@endrole
 @role('administrator')
 <li class="treeview active">
     <a href="#"><i class="fa fa-user-md"></i> <span>{{ __('medical') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
