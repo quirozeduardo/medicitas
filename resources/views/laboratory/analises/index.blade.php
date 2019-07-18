@@ -22,18 +22,16 @@
         
         </div>
     </div>
-    <script>
-        console.log('yaya');
-        @isset($saved)
-            console.log('juan');
-            @if($saved == true)
-            console.log('lolo');
-                if (confirm("Los analisis se agregaron correctamente y estaran listos dentro de 4 dias, desea agendar una cita ahora?")) {
-                    location.href = '{{ route('doctor.schedulePatient') }}';
-                }
-                else {
-                }
-            @endif
-        @endisset
-    </script>
+
+    @isset($saved)
+        @if($saved == true)
+            <script>
+                        if (confirm("Los analisis se agregaron correctamente y estaran listos dentro de 4 dias, desea agendar una cita ahora?")) {
+                            location.href = '{{ route('doctor.schedulePatient') }}';
+                        }
+                        else {
+                        }
+            </script>
+        @endif
+    @endisset
 @endsection

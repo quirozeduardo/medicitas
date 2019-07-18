@@ -5,15 +5,20 @@
     <title>{{ config('app.name') }}</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="baseUrl" content="{{URL::to('/')}}">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap3/css/bootstrap.min.css') }}">
 
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('plugins/fontawesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/fontawesome/css/fontawesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/fontawesome/css/solid.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/fontawesome/css/regular.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/fontawesome/css/brands.min.css') }}">
 
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('plugins/AdminLTE/css/AdminLTE.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/AdminLTE/css/AdminLTE.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/AdminLTE/css/skins/_all-skins.css') }}">
 
     <!-- iCheck -->
@@ -27,6 +32,21 @@
     <link rel="stylesheet" href="{{ asset('plugins/calendar/css/jquery-calendar.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+    <style>
+        #app {
+            background-image: url("{{ asset('images/bg_login.jpg') }}");
+        }
+        .wrapper {
+            background: transparent !important;
+        }
+        .content-wrapper {
+            background: rgba(256,256,256,0.65);
+        }
+        .box.box-body {
+            background: transparent !important;
+        }
+    </style>
 
     @yield('css')
 </head>
@@ -44,7 +64,7 @@
 @endphp
 
 <div id="app">
-
+    <v-app>
 
     <div class="wrapper">
         <!-- Main Header -->
@@ -59,7 +79,7 @@
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fas fa-bars"></i>
                 </a>
                 <!-- Navbar Right Menu -->
                 @if (!Auth::guest())
@@ -119,7 +139,16 @@
                                         @foreach($notifications as $notification)
                                             <li>
                                                 <a href="{{route('notifications.open',$notification->id)}}">
-                                                    <i class="fa fa-user text-red"></i> {{ $notification->name}}
+                                                    <div class="pull-left">
+                                                        <i class="fa fa-user text-red"></i>
+                                                    </div>
+                                                    <h4>
+                                                        {!! $notification->name !!}
+                                                    </h4>
+                                                    <p>
+                                                        <span>{!! ($notification->description != null)?$notification->description:'' !!}</span>
+                                                    </p>
+
                                                 </a>
                                             </li>
                                         @endforeach
@@ -192,7 +221,7 @@
         </footer>
 
     </div>
-
+    </v-app>
 </div>
     <!-- jQuery 3.1.1 -->
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
@@ -234,6 +263,7 @@
                 'autoclose': true
             });
         });
+
     </script>
     @yield('scripts')
 </body>

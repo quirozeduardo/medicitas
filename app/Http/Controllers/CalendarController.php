@@ -20,7 +20,11 @@ class CalendarController extends Controller
         $patient = Patient::where('user_id',Auth::user()->id)->first();
         $doctor = Doctor::where('user_id',Auth::user()->id)->first();
 
-        $patientAppointments = MedicalAppointment::where('patient_id',$patient->id)->get();
+        $patientAppointments = null;
+        if ($patient) {
+            $patientAppointments = MedicalAppointment::where('patient_id',$patient->id)->get();
+        }
+
         $doctorAppointments = null;
         if($doctor)
         {

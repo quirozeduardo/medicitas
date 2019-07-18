@@ -15,6 +15,7 @@ window._ = require('lodash');
  */
 
 window.axios = require('axios');
+window.axios.defaults.baseURL = 'http://localhost/medicitas/public/';
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -25,6 +26,11 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  */
 
 let token = document.head.querySelector('meta[name="csrf-token"]');
+let baseUrl = document.head.querySelector('meta[name="baseUrl"]');
+if (baseUrl) {
+    window.axios.defaults.baseURL = String(baseUrl.getAttribute('content'))+'/';
+}
+
 
 if (token) {
     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;

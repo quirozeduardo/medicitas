@@ -31,13 +31,29 @@ class SchedulePatientController extends Controller
         $doctor = Doctor::where('user_id', Auth::user()->id)->first();
         $doctorPatient = DoctorPatient::select('doctor_patient.patient_id')
             ->where('doctor_patient.doctor_id',$doctor->id)
-            ->where('accepted',true)->get();
+            ->where('accepted',1)->get();
         $patients = Patient::join('users','patients.user_id','users.id')
             ->whereIn('patients.id',$doctorPatient)->pluck('users.name','patients.id');
         return view('schedule_patient')
             ->with('patients',$patients);
     }
-
+    public function retrievePatients() {
+        $doctor = Doctor::where('user_id', Auth::user()->id)->first();
+        $doctorPatient = DoctorPatient::select('doctor_patient.patient_id')
+            ->where('doctor_patient.doctor_id',$doctor->id)
+            ->where('accepted',1)->get();
+        $patients = Patient::select('users.name','patients.id')->join('users','patients.user_id','users.id')
+            ->whereIn('patients.id',$doctorPatient)->get();
+        $data = [];
+        foreach ($patients as $patient) {
+            $data[] = [
+                'name' => $patient->name,
+                'id' => $patient->id,
+            ];
+        }
+        echo json_encode($data);
+        exit();
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -62,15 +78,31 @@ class SchedulePatientController extends Controller
                 'doctor_id' => $doctor->id,
                 'medical_appointment_status_id' => 1
             );
-            $medicalAppointment = $this->medicalAppointmentRepository->create($input);
-            Flash::success('Cita agendada Correctamente');
+            try {
+                $medicalAppointment = $this->medicalAppointmentRepository->create($input);
+            } catch (\Exception $exception) {
+                echo json_encode([
+                    'message'=> 'Datos incorrectos, completelos',
+                    'code'=> 'fail',
+                    'redirectUrl' => ''
+                ], JSON_FORCE_OBJECT);
+                exit;
+            }
         }else{
-            Flash::error('No eres Doctor, no puedes agendar una cita como Doctor');
-            return redirect(route('schedulePatient.index'));
+            echo json_encode([
+                'message'=> 'No eres Doctor, no puedes agendar una cita como doctor',
+                'code'=> 'no-permission',
+                'redirectUrl' => route('home')
+            ], JSON_FORCE_OBJECT);
+            exit();
         }
 
-
-        return redirect(route('home'));
+        echo json_encode([
+            'message'=> 'Cita agendada Correctamente',
+            'code'=> 'success',
+            'redirectUrl' => route('home')
+        ], JSON_FORCE_OBJECT);
+        exit();
     }
 
     /**

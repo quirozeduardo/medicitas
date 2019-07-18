@@ -25,7 +25,7 @@ class Patient
         }
         else
         {
-            Flash::overlay('No puedes acceder a este apartado o realizar la acción','NO ERES PACIENTE');
+            Flash::error('No puedes acceder a este apartado o realizar la acción','NO ERES PACIENTE');
             return Redirect::back();
         }
     }

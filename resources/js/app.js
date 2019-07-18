@@ -15,8 +15,21 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-//Vue.component('example-component', require('./components/ExampleComponent.vue'));
+import Vue from 'vue';
+import Vuetify from 'vuetify';
 
+Vue.use(Vuetify, {
+    iconfont: 'fa',
+});
+Vue.component('schedule', require('./components/Schedule.vue'));
+Vue.component('stars', require('./components/Starts.vue'));
+Vue.component('laboratory', require('./components/Laboratory.vue'));
+Vue.component('schedule-patient', require('./components/SchedulePatient.vue'));
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data() {
+        return {
+            picker: new Date().toISOString().substr(0, 10),
+        }
+    }
 });

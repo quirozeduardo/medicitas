@@ -9,14 +9,12 @@
                 <img src="{{ $avatarUrl }}" class="img-circle"
                      alt="User Image"/>
             </div>
-            <div class="pull-left info">
+            <div class="pull-left mt-2 ml-2">
                 @if (Auth::guest())
                 <p>{{ __('guest') }}</p>
                 @else
-                    <p><a href="{{ route('profile.index') }}"><p class="info">{{ Auth::user()->name}}</p></a></p>
+                    <a href="{{ route('profile.index') }}"><h5 class="text-bold">{{ Auth::user()->name}}</h5></a>
                 @endif
-                <!-- Status -->
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
 

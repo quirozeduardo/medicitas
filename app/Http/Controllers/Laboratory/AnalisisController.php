@@ -10,6 +10,7 @@ use App\Models\Laboratory\TypeAnalisis;
 use App\Models\Medical\Doctor;
 use App\Models\Medical\DoctorPatient;
 use App\Models\Medical\Patient;
+use App\Models\Notification;
 use App\Repositories\Laboratory\AnalisisRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
@@ -34,6 +35,7 @@ class AnalisisController extends AppBaseController
      */
     public function index(AnalisisDataTable $analisisDataTable)
     {
+
         return $analisisDataTable->render('laboratory.analises.index');
     }
 
@@ -68,11 +70,24 @@ class AnalisisController extends AppBaseController
         $input = $request->all();
 
         $analisis = $this->analisisRepository->create($input);
+        $typeAnalisis = TypeAnalisis::where('id',$analisis->type_analisis_id)->first();
 
         Flash::success('Analisis saved successfully.');
 
-        return redirect(route('laboratory.analises.index'))
-            ->with('saved', true);
+        $notification = new Notification;
+        $notification->name = '¿Agendar Cita?';
+        $notification->description = 'Analisis listos para '.date('Y-m-d', strtotime($analisis->arrived_analysis_date. ' + '.intval($typeAnalisis->time_delay).' days'));;
+        $notification->is_seen = false;
+        $notification->user_id = Auth::user()->id;
+        $notification->redirect= 'schedulePatient.index';
+        $notification->save();
+
+
+        echo json_encode([
+            'message'=> 'Cita agendada Correctamente',
+            'code'=> 'success',
+            'redirectUrl' => route('laboratory.analises.index')
+        ], JSON_FORCE_OBJECT);
     }
 
     /**

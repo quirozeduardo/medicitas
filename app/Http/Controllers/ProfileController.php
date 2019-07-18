@@ -120,7 +120,7 @@ class ProfileController extends Controller
         $user->email = $request->input('email');
         $user->save();
 
-        Flash::overlay('UserDetails updated successfully.');
+        Flash::success('UserDetails updated successfully.');
 
         return redirect(route('profile.index'));
     }

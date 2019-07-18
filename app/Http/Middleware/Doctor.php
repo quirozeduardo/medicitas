@@ -25,7 +25,7 @@ class Doctor
         }
         else
         {
-            Flash::overlay('No puedes acceder a este apartado o realizar la acción','NO ERES DOCTOR');
+            Flash::error('No puedes acceder a este apartado o realizar la acción','NO ERES DOCTOR');
             return Redirect::back();
         }
     }

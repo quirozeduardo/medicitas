@@ -25,18 +25,22 @@ Route::group(['middleware' => ['auth']],function(){
 
     Route::group(['middleware' => ['doctor']],function() {
         Route::get('patients', 'PatientsController@index')->name('patients.index');
+        Route::get('patients/get', 'PatientsController@getMyPatients')->name('patients.getMyPatients');
         Route::get('patients/addPatient/{id}', 'PatientsController@addPatient')->name('patients.addPatient');
         Route::get('patients/rejectPatient/{id}', 'PatientsController@rejectPatient')->name('patients.rejectPatient');
         Route::get('patients/acceptPatient/{id}', 'PatientsController@acceptPatient')->name('patients.acceptPatient');
         Route::resource('schedulePatient', 'SchedulePatientController');
+        Route::post('schedulePatient/retrievePatients', 'SchedulePatientController@retrievePatients');
     });
 
     Route::group(['middleware' => ['patient']],function() {
         Route::get('doctors', 'DoctorsController@index')->name('doctors.index');
+        Route::post('doctors/setRating', 'DoctorsController@setRating')->name('doctors.setRating');
         Route::get('doctors/addDoctor/{id}', 'DoctorsController@addDoctor')->name('doctors.addDoctor');
         Route::get('patients/rejectDoctor/{id}', 'DoctorsController@rejectDoctor')->name('doctors.rejectDoctor');
         Route::get('patients/acceptDoctor/{id}', 'DoctorsController@acceptDoctor')->name('doctors.acceptDoctor');
         Route::resource('schedule', 'ScheduleController');
+        Route::post('schedule/retrieveDoctors', 'ScheduleController@retrieveDoctors');
     });
 
 
@@ -79,5 +83,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'medical', 'as' => 'medical.
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'laboratory', 'as' => 'laboratory.'], function () {
     Route::resource('typeAnalises', 'Laboratory\TypeAnalisisController');
+    Route::get('typeAnalises/get', 'Laboratory\Laboratory@getTypeAnalisis');
     Route::resource('analises', 'Laboratory\AnalisisController');
 });

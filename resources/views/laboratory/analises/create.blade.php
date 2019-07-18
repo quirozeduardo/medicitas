@@ -12,11 +12,7 @@
 
             <div class="box-body">
                 <div class="row">
-                    {!! Form::open(['route' => 'laboratory.analises.store']) !!}
-
-                        @include('laboratory.analises.fields')
-
-                    {!! Form::close() !!}
+                    <laboratory/>
                 </div>
             </div>
         </div>

@@ -6,6 +6,7 @@ use App\DataTables\Laboratory\TypeAnalisisDataTable;
 use App\Http\Requests\Laboratory;
 use App\Http\Requests\Laboratory\CreateTypeAnalisisRequest;
 use App\Http\Requests\Laboratory\UpdateTypeAnalisisRequest;
+use App\Models\Laboratory\TypeAnalisis;
 use App\Repositories\Laboratory\TypeAnalisisRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
@@ -32,6 +33,12 @@ class TypeAnalisisController extends AppBaseController
         return $typeAnalisisDataTable->render('laboratory.type_analises.index');
     }
 
+    function getTypeAnalisis() {
+        $all = TypeAnalisis::get();
+        if ($all) {
+            return $all->toJson();
+        } return json_encode($all);;
+    }
     /**
      * Show the form for creating a new TypeAnalisis.
      *

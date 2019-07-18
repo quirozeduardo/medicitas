@@ -30,7 +30,7 @@ class PatientsController extends Controller
             $patients = Patient::select('patients.user_id','patients.id')
                 ->join('doctor_patient','doctor_patient.patient_id','patients.id')
                 ->where('doctor_patient.doctor_id',$doctor->id)
-                ->where('doctor_patient.accepted',true)->get();
+                ->where('doctor_patient.accepted',1)->get();
 
             $myPatients = User::whereIn('id',$patients->pluck('user_id'))->get();
             if($patients)
@@ -58,30 +58,57 @@ class PatientsController extends Controller
             ->with('users', $myPatients)
             ->with('patients',$patientsToAdd);
     }
+    function getMyPatients() {
+        $myPatients = null;
+        $doctor = Doctor::where('user_id', Auth::user()->id)->first();
+        $patientsToAdd = null;
+
+        if ($doctor) {
+            $myPatients = Patient::select('users.name', 'patients.id')
+                ->join('doctor_patient', 'doctor_patient.patient_id', 'patients.id')
+                ->join('users', 'users.id', '=', 'patients.user_id')
+                ->where('doctor_patient.doctor_id', $doctor->id)
+                ->where('doctor_patient.accepted', 1)->get();
+
+        }
+        if ($myPatients !== null) {
+            return $myPatients->toJson();
+        }
+        return json_encode($myPatients);
+    }
     public function addPatient($id){
         $doctor = Doctor::where('user_id', Auth::user()->id)->first();
         $doctorPatient = DoctorPatient::where('patient_id',$id)
             ->where('doctor_id',$doctor->id)->first();
         if(!$doctorPatient)
         {
+            $patient = Patient::where('id', $id)->first();
             $doctorPatient = new DoctorPatient;
             $doctorPatient->patient_id = $id;
+            $doctorPatient->accepted = 0;
             $doctorPatient->doctor_id = $doctor->id;
             $doctorPatient->send_by = Auth::user()->id;
             $doctorPatient->save();
+
+            $notification = new Notification;
+            $notification->name = 'El doctor '.$doctor->user->name .' te envio una solicitud';
+            $notification->is_seen = false;
+            $notification->user_id = $patient->user->id;
+            $notification->redirect= 'doctors.index';
+            $notification->save();
         }else
         {
-            Flash::overlay('Y se envio la solicitud anteriormente','Mensaje');
+            Flash::success('Y se envio la solicitud anteriormente','Mensaje');
         }
         return redirect(route('patients.index'));
     }
     public function rejectPatient($id)
     {
-        return $this->changeAccepted($id,false);
+        return $this->changeAccepted($id,2);
     }
     public function acceptPatient($id)
     {
-        return $this->changeAccepted($id,true);
+        return $this->changeAccepted($id,1);
 
     }
     public function changeAccepted($id,$value)
@@ -94,7 +121,7 @@ class PatientsController extends Controller
             $doctorPatient->accepted = $value;
             $doctorPatient->save();
         }
-        if($value == true)
+        if($value == 1)
         {
             $patient = Patient::where('id',$id)->first();
             $notification = new Notification;
@@ -104,6 +131,7 @@ class PatientsController extends Controller
             $notification->redirect= 'profile.show';
             $notification->redirect_param_1= $doctor->user->id;
             $notification->save();
+            Flash::success('Aceptado','Mensaje');
         }
         return redirect(route('patients.index'));
     }

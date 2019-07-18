@@ -37,6 +37,9 @@ class NotificationsController extends Controller
         $notificaton = Notification::where('id',$id)->first();
         $notificaton->is_seen = true;
         $notificaton->save();
-        return redirect(route($notificaton->redirect,$notificaton->redirect_param_1));
+        if (!($notificaton->redirect_param_1==null))
+            return redirect(route($notificaton->redirect,$notificaton->redirect_param_1));
+        else
+            return redirect(route($notificaton->redirect));
     }
 }

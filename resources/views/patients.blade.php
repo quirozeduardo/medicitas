@@ -24,24 +24,28 @@
                                     @foreach($patients as $patient)
                                         <li>
                                             <img class="user-profile-image" src="{{ \App\Http\Controllers\ProfileController::getAvatarUrlUser($patient->user) }}" alt="{{ $patient->user->name }}">
-                                            <a class="users-list-name" href="{!! route('patients.addPatient',$patient->id) !!}">{{ $patient->user->name }}</a>
+                                            <a class="users-list-name" href="{!! route('profile.show',$patient->id) !!}">{{ $patient->user->name }}</a>
                                             <span class="users-list-date">
                                                 <a href="{{ route('messenger.read',$patient->user->id)}}"><i class="fa fa-comments"></i> Mensaje</a>
                                                 <br>
-                                                @if(! ($doctorPatient = $patient->doctorPatient->first()))
-                                                    <a href="{{ route('patients.addPatient',$patient->id)}}"><i class="fa fa-user-plus"></i> Agregar</a>
-                                                @else
-                                                    @if($send_by = $doctorPatient->send_by == Auth::user()->id)
-                                                        @if($doctorPatient->accepted === null)
+                                                @if($doctorPatient = $patient->doctorPatient->where('doctor_id', \App\Models\Medical\Doctor::where('user_id',Auth::user()->id)->first()->id)->first())
+                                                    @if($doctorPatient->send_by == Auth::user()->id)
+                                                        @if(intval($doctorPatient->accepted) == 0)
                                                             Solicitud enviada
-                                                        @elseif($doctorPatient->accepted == false)
+                                                        @elseif(intval($doctorPatient->accepted) == 2)
                                                             <p class="text-danger">Solicitud Rechazada</p>
                                                         @endif
                                                     @else
-                                                        <a href="{{ route('patients.acceptPatient',$patient->id)}}"><i class="fa fa-user-plus"></i> Aceptar</a>
-                                                        <br>
-                                                        <a href="{{ route('patients.rejectPatient',$patient->id)}}"><i class="fa fa-user-times"></i> Rechazar</a>
+                                                        @if(intval($doctorPatient->accepted) == 0)
+                                                            <a href="{{ route('patients.acceptPatient',$patient->id)}}"><i class="fa fa-user-plus"></i> Aceptar</a>
+                                                            <br>
+                                                            <a href="{{ route('patients.rejectPatient',$patient->id)}}"><i class="fa fa-user-times"></i> Rechazar</a>
+                                                        @elseif(intval($doctorPatient->accepted) == 2)
+                                                            <a class="text-danger" href="{{ route('patients.acceptPatient',$patient->id)}}"><i class="fa fa-user-plus"></i> Aceptar</a>
+                                                        @endif
                                                     @endif
+                                                @else
+                                                    <a href="{{ route('patients.addPatient',$patient->id)}}"><i class="fa fa-user-plus"></i> Agregar</a>
                                                 @endif
                                             </span>
                                         </li>
